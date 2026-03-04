@@ -1,0 +1,103 @@
+<!--miniprogram/pages/publish/publish.wxml-->
+<view class="publish-page">
+  <form bindsubmit="onSubmit">
+    <!-- 发布类型选择 -->
+    <view class="form-item">
+      <view class="label">发布类型</view>
+      <view class="type-selector">
+        <view 
+          class="type-option {{formData.type === 'lost' ? 'active' : ''}}"
+          bindtap="selectType"
+          data-type="lost"
+        >
+          寻物启事
+        </view>
+        <view 
+          class="type-option {{formData.type === 'found' ? 'active' : ''}}"
+          bindtap="selectType"
+          data-type="found"
+        >
+          失物招领
+        </view>
+      </view>
+    </view>
+    
+    <!-- 标题 -->
+    <view class="form-item">
+      <input 
+        name="title" 
+        placeholder="请输入物品名称（如：黑色钱包、校园卡）"
+        value="{{formData.title}}"
+        bindinput="onInput"
+      />
+    </view>
+    
+    <!-- 描述 -->
+    <view class="form-item">
+      <textarea 
+        name="description" 
+        placeholder="请详细描述物品特征、丢失/拾取经过等"
+        value="{{formData.description}}"
+        bindinput="onInput"
+        maxlength="200"
+      />
+      <view class="word-count">{{formData.description.length}}/200</view>
+    </view>
+    
+    <!-- 图片上传 -->
+    <view class="form-item">
+      <view class="label">上传图片（最多3张）</view>
+      <view class="image-uploader">
+        <block wx:for="{{formData.images}}" wx:key="index">
+          <view class="image-preview">
+            <image src="{{item}}" mode="aspectFill"></image>
+            <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">×</view>
+          </view>
+        </block>
+        
+        <view 
+          class="upload-btn" 
+          bindtap="chooseImage"
+          wx:if="{{formData.images.length < 3}}"
+        >
+          <text>+</text>
+          <text>添加图片</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 地点选择 -->
+    <view class="form-item">
+      <picker 
+        name="location" 
+        bindchange="onLocationChange" 
+        value="{{locationIndex}}" 
+        range="{{locationOptions}}"
+      >
+        <view class="picker">
+          <text wx:if="{{formData.location}}">{{formData.location}}</text>
+          <text wx:else class="placeholder">请选择地点</text>
+        </view>
+      </picker>
+    </view>
+    
+    <!-- 时间选择 -->
+    <view class="form-item">
+      <picker 
+        mode="date" 
+        bindchange="onDateChange"
+        value="{{formData.date}}"
+      >
+        <view class="picker">
+          <text wx:if="{{formData.date}}">{{formData.date}}</text>
+          <text wx:else class="placeholder">选择日期</text>
+        </view>
+      </picker>
+    </view>
+    
+    <!-- 提交按钮 -->
+    <view class="submit-btn">
+      <button form-type="submit" class="submit-button">发布</button>
+    </view>
+  </form>
+</view>

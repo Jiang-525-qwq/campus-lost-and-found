@@ -1,0 +1,77 @@
+<!-- miniprogram/pages/me/me.wxml -->
+<view class="me-page">
+    <!-- 用户信息头部 -->
+    <view class="user-header" bindtap="onTapUserInfo">
+        <view class="avatar-section">
+            <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+            <view class="avatar-edit">编辑</view>
+        </view>
+        <view class="user-info">
+            <view class="nickname">{{userInfo.nickName || '点击登录'}}</view>
+            <view class="user-id" wx:if="{{userInfo._openid}}">
+                ID: {{userInfo._openid.substring(0, 8)}}...
+            </view>
+            <view class="login-tip" wx:else>登录后体验完整功能</view>
+        </view>
+    </view>
+    <!-- 数据概览 -->
+    <view class="stats-card" wx:if="{{isLoggedIn}}">
+        <view class="stat-item" bindtap="navigateToMyPosts" data-type="all">
+            <view class="stat-number">{{stats.total || 0}}</view>
+            <view class="stat-label">全部发布</view>
+        </view>
+        <view class="stat-item" bindtap="navigateToMyPosts" data-type="pending">
+            <view class="stat-number">{{stats.pending || 0}}</view>
+            <view class="stat-label">待处理</view>
+        </view>
+        <view class="stat-item" bindtap="navigateToMyPosts" data-type="finished">
+            <view class="stat-number">{{stats.finished || 0}}</view>
+            <view class="stat-label">已完成</view>
+        </view>
+    </view>
+    <!-- 功能列表 -->
+    <view class="menu-list">
+        <view class="menu-section">
+            <view class="menu-title">我的内容</view>
+            <navigator class="menu-item" url="/pages/me/my-posts/my-posts" hover-class="none">
+                <image class="menu-icon" src="/images/icon-list.png"></image>
+                <text class="menu-text">我的发布</text>
+                <view class="menu-badge" wx:if="{{stats.pending > 0}}">{{stats.pending}}</view>
+                <view class="menu-arrow">›</view>
+            </navigator>
+            <navigator class="menu-item" url="/pages/me/messages/messages" hover-class="none">
+                <image class="menu-icon" src="/images/icon-message.png"></image>
+                <text class="menu-text">我的消息</text>
+                <view class="menu-badge" wx:if="{{unreadCount > 0}}">{{unreadCount}}</view>
+                <view class="menu-arrow">›</view>
+            </navigator>
+        </view>
+        <view class="menu-section">
+            <view class="menu-title">系统设置</view>
+            <view class="menu-item" bindtap="onAbout">
+                <image class="menu-icon" src="/images/icon-about.png"></image>
+                <text class="menu-text">关于我们</text>
+                <view class="menu-arrow">›</view>
+            </view>
+            <view class="menu-item" bindtap="onFeedback">
+                <image class="menu-icon" src="/images/icon-feedback.png"></image>
+                <text class="menu-text">意见反馈</text>
+                <view class="menu-arrow">›</view>
+            </view>
+        </view>
+        <view class="menu-section" wx:if="{{isLoggedIn}}">
+            <view class="menu-item logout-btn" bindtap="onLogout">
+                <text class="logout-text">退出登录</text>
+            </view>
+        </view>
+    </view>
+    <!-- 登录按钮 (未登录时显示) -->
+    <view class="login-btn-section" wx:if="{{!isLoggedIn}}">
+        <button class="login-button" type="primary" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
+            微信一键登录
+        </button>
+        <view class="login-tip">登录后可以发布信息、接收消息</view>
+    </view>
+    <!-- 版本信息 -->
+    <view class="version-info">校园寻物 v1.0.0</view>
+</view>

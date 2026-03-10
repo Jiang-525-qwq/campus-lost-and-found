@@ -1,0 +1,109 @@
+<!-- miniprogram/pages/detail/detail.wxml -->
+<view class="detail-page">
+    <!-- 图片轮播 -->
+    <swiper class="image-swiper" indicator-dots="{{imageUrls.length > 1}}" indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#07c160" autoplay="{{imageUrls.length > 1}}">
+        <block wx:for="{{imageUrls}}" wx:key="*this">
+            <swiper-item>
+                <image src="{{item}}" mode="aspectFill" class="detail-image" bindtap="previewImage" data-index="{{index}}"></image>
+            </swiper-item>
+        </block>
+        <swiper-item wx:if="{{imageUrls.length === 0}}">
+            <view class="no-image">暂无图片</view>
+        </swiper-item>
+    </swiper>
+    <!-- 物品信息卡片 -->
+    <view class="info-card">
+        <!-- 状态和类型标签 -->
+        <view class="info-header">
+            <view class="type-badge {{postData.type}}">
+                {{postData.type === 'lost' ? '寻物启事' : '失物招领'}}
+            </view>
+            <view class="status-badge {{postData.status}}">
+                {{postData.status === 'pending' ? '待处理' : postData.status === 'claimed' ? '已认领' : '已归还'}}
+            </view>
+        </view>
+        <!-- 标题和描述 -->
+        <view class="info-body">
+            <view class="detail-title">{{postData.title}}</view>
+            <view class="detail-description">{{postData.description}}</view>
+            <!-- 元信息 -->
+            <view class="meta-list">
+                <view class="meta-item">
+                    <image class="meta-icon" src="/images/icon-location.png"></image>
+                    <text class="meta-text">地点：{{postData.location || '未知'}}</text>
+                </view>
+                <view class="meta-item">
+                    <image class="meta-icon" src="/images/icon-time.png"></image>
+                    <text class="meta-text">
+                        时间：{{formatTime(postData.lostTime || postData.foundTime || postData.createTime)}}
+                    </text>
+                </view>
+                <view class="meta-item" wx:if="{{postData.contactInfo}}">
+                    <image class="meta-icon" src="/images/icon-contact.png"></image>
+                    <text class="meta-text">联系方式：{{postData.contactInfo}}</text>
+                </view>
+            </view>
+        </view>
+        <!-- 发布者信息 -->
+        <view class="user-card" bindtap="viewUserProfile" data-userid="{{postData.publisherId}}">
+            <image class="user-avatar" src="{{publisherInfo.avatarUrl || '/images/default-avatar.png'}}"></image>
+            <view class="user-info">
+                <view class="user-name">{{publisherInfo.nickName || '匿名用户'}}</view>
+                <view class="user-meta">发布于 {{formatTime(postData.createTime, true)}}</view>
+            </view>
+            <view class="user-arrow">›</view>
+        </view>
+    </view>
+    <!-- 操作按钮区域 -->
+    <view class="action-bar" wx:if="{{!isMyPost}}">
+        <!-- 联系发布者（私聊） -->
+        <button class="action-btn contact-btn" type="primary" bindtap="startChat" hover-class="button-hover">
+            <image class="btn-icon" src="/images/icon-message-white.png"></image>
+            联系TA
+        </button>
+        <!-- 快捷操作 -->
+        <button class="action-btn quick-btn" open-type="share" hover-class="button-hover">
+            <image class="btn-icon" src="/images/icon-share.png"></image>
+            分享
+        </button>
+    </view>
+    <!-- 如果是自己的帖子，显示管理按钮 -->
+    <view class="action-bar" wx:else>
+        <button class="action-btn manage-btn {{postData.status === 'pending' ? 'active' : ''}}" bindtap="updateStatus" data-status="claimed" hover-class="button-hover" wx:if="{{postData.status === 'pending'}}">
+            <image class="btn-icon" src="/images/icon-check.png"></image>
+            {{postData.type === 'lost' ? '已找到' : '已归还'}}
+        </button>
+        <button class="action-btn edit-btn" bindtap="editPost" hover-class="button-hover">
+            <image class="btn-icon" src="/images/icon-edit.png"></image>
+            编辑
+        </button>
+        <button class="action-btn delete-btn" bindtap="deletePost" hover-class="button-hover">
+            <image class="btn-icon" src="/images/icon-delete.png"></image>
+            删除
+        </button>
+    </view>
+    <!-- 相似推荐 -->
+    <view class="recommend-section" wx:if="{{similarPosts.length > 0}}">
+        <view class="section-title">相似物品</view>
+        <scroll-view scroll-x class="recommend-scroll">
+            <block wx:for="{{similarPosts}}" wx:key="id">
+                <view class="recommend-item" bindtap="viewSimilarDetail" data-id="{{item.id}}">
+                    <image class="recommend-image" src="{{item.images && item.images[0] ? item.images[0] : '/images/default-item.png'}}" mode="aspectFill"></image>
+                    <view class="recommend-title">{{item.title}}</view>
+                    <view class="recommend-location">{{item.location}}</view>
+                </view>
+            </block>
+        </scroll-view>
+    </view>
+    <!-- 加载状态 -->
+    <view class="loading" wx:if="{{isLoading}}">
+        <image class="loading-icon" src="/images/loading.gif"></image>
+        <text>加载中...</text>
+    </view>
+    <!-- 错误状态 -->
+    <view class="error-view" wx:if="{{!isLoading && loadError}}">
+        <image class="error-icon" src="/images/icon-error.png"></image>
+        <view class="error-text">加载失败，请重试</view>
+        <button class="retry-btn" bindtap="retryLoad">重新加载</button>
+    </view>
+</view>

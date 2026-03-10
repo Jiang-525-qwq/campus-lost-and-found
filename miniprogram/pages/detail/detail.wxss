@@ -1,0 +1,357 @@
+/* miniprogram/pages/detail/detail.wxss */
+.detail-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-bottom: 120rpx;
+}
+
+/* 图片轮播 */
+.image-swiper {
+  width: 100%;
+  height: 500rpx;
+  background: #f0f0f0;
+}
+
+.detail-image {
+  width: 100%;
+  height: 100%;
+}
+
+.no-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 32rpx;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+}
+
+/* 信息卡片 */
+.info-card {
+  background: white;
+  margin: 20rpx;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+  position: relative;
+  top: -40rpx;
+  margin-bottom: -20rpx;
+}
+
+/* 信息头部 */
+.info-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+}
+
+.type-badge, .status-badge {
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.type-badge.lost {
+  background: #ffeaea;
+  color: #ff6b6b;
+}
+
+.type-badge.found {
+  background: #e8f5e9;
+  color: #07c160;
+}
+
+.status-badge.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.claimed {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-badge.returned {
+  background: #d4edda;
+  color: #155724;
+}
+
+/* 信息主体 */
+.info-body {
+  margin-bottom: 30rpx;
+}
+
+.detail-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  line-height: 1.4;
+}
+
+.detail-description {
+  font-size: 30rpx;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 30rpx;
+}
+
+/* 元信息列表 */
+.meta-list {
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  padding: 20rpx;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.meta-item:last-child {
+  margin-bottom: 0;
+}
+
+.meta-icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 15rpx;
+  opacity: 0.7;
+}
+
+.meta-text {
+  font-size: 28rpx;
+  color: #666;
+  flex: 1;
+}
+
+/* 用户卡片 */
+.user-card {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-top: 1rpx solid #f0f0f0;
+  margin-top: 20rpx;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  background: #f5f5f5;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 5rpx;
+}
+
+.user-meta {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.user-arrow {
+  color: #ccc;
+  font-size: 40rpx;
+  transform: scale(1.5, 1.5);
+}
+
+/* 操作按钮栏 */
+.action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 20rpx 30rpx;
+  display: flex;
+  gap: 20rpx;
+  border-top: 1rpx solid #f0f0f0;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 0;
+  border: none;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.button-hover {
+  opacity: 0.9;
+  transform: translateY(-2rpx);
+}
+
+.action-btn::after {
+  border: none;
+}
+
+.btn-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 10rpx;
+}
+
+/* 联系按钮 */
+.contact-btn {
+  background: linear-gradient(135deg, #07c160, #05a050);
+  color: white;
+  box-shadow: 0 4rpx 20rpx rgba(7, 193, 96, 0.3);
+  flex: 2;
+}
+
+/* 快捷按钮 */
+.quick-btn {
+  background: #f8f9fa;
+  color: #666;
+  border: 1rpx solid #e0e0e0;
+}
+
+/* 管理按钮 */
+.manage-btn {
+  background: #f8f9fa;
+  color: #666;
+  border: 1rpx solid #e0e0e0;
+}
+
+.manage-btn.active {
+  background: linear-gradient(135deg, #07c160, #05a050);
+  color: white;
+  border: none;
+}
+
+.edit-btn {
+  background: #e3f2fd;
+  color: #1976d2;
+  border: 1rpx solid #bbdefb;
+}
+
+.delete-btn {
+  background: #ffebee;
+  color: #d32f2f;
+  border: 1rpx solid #ffcdd2;
+}
+
+/* 相似推荐 */
+.recommend-section {
+  background: white;
+  margin: 20rpx;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.recommend-scroll {
+  white-space: nowrap;
+}
+
+.recommend-item {
+  display: inline-block;
+  width: 200rpx;
+  margin-right: 20rpx;
+  vertical-align: top;
+}
+
+.recommend-item:last-child {
+  margin-right: 0;
+}
+
+.recommend-image {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 12rpx;
+  background: #f5f5f5;
+  margin-bottom: 10rpx;
+}
+
+.recommend-title {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 5rpx;
+}
+
+.recommend-location {
+  font-size: 22rpx;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.loading-icon {
+  width: 60rpx;
+  height: 60rpx;
+  display: block;
+  margin: 0 auto 20rpx;
+}
+
+/* 错误状态 */
+.error-view {
+  text-align: center;
+  padding: 100rpx 0;
+}
+
+.error-icon {
+  width: 120rpx;
+  height: 120rpx;
+  opacity: 0.5;
+  margin-bottom: 30rpx;
+}
+
+.error-text {
+  font-size: 30rpx;
+  color: #666;
+  margin-bottom: 40rpx;
+}
+
+.retry-btn {
+  display: inline-block;
+  background: #07c160;
+  color: white;
+  border: none;
+  border-radius: 50rpx;
+  padding: 20rpx 50rpx;
+  font-size: 28rpx;
+}
+
+.retry-btn::after {
+  border: none;
+}

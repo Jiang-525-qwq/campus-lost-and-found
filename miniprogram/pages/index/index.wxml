@@ -1,0 +1,97 @@
+<!-- 搜索栏和筛选 -->
+<view class="search-section">
+  <view class="search-bar">
+    <input 
+      placeholder="搜索物品、地点..." 
+      bindinput="onSearchInput"
+      value="{{searchKeyword}}"
+    />
+    <button class="search-btn" bindtap="onSearch">搜索</button>
+  </view>
+  
+  <view class="filter-tabs">
+    <view 
+      class="tab {{activeTab === 'all' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="all"
+    >
+      全部
+    </view>
+    <view 
+      class="tab {{activeTab === 'lost' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="lost"
+    >
+      寻物启事
+    </view>
+    <view 
+      class="tab {{activeTab === 'found' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="found"
+    >
+      失物招领
+    </view>
+  </view>
+  
+  <view class="sort-options">
+    <picker 
+      bindchange="onSortChange" 
+      value="{{sortIndex}}" 
+      range="{{sortOptions}}"
+    >
+      <view>排序: {{sortOptions[sortIndex]}}</view>
+    </picker>
+    <picker 
+      bindchange="onLocationFilter" 
+      value="{{locationIndex}}" 
+      range="{{locationOptions}}"
+    >
+      <view>地点: {{locationOptions[locationIndex]}}</view>
+    </picker>
+  </view>
+</view>
+
+<!-- 帖子列表 -->
+<scroll-view 
+  scroll-y 
+  class="post-list"
+  bindscrolltolower="onReachBottom"
+>
+  <block wx:for="{{postList}}" wx:key="id">
+    <view class="post-card" bindtap="viewDetail" data-id="{{item.id}}">
+      <!-- 帖子类型标签 -->
+      <view class="post-type {{item.type}}">
+        {{item.type === 'lost' ? '寻物' : '招领'}}
+      </view>
+      
+      <!-- 图片展示 -->
+      <view class="post-image" wx:if="{{item.images && item.images.length > 0}}">
+        <image src="{{item.images[0]}}" mode="aspectFill"></image>
+      </view>
+      
+      <!-- 文字信息 -->
+      <view class="post-content">
+        <view class="post-title">{{item.title}}</view>
+        <view class="post-desc">{{item.description}}</view>
+        
+        <view class="post-meta">
+          <text class="location">{{item.location}}</text>
+          <text class="time">{{formatTime(item.createTime)}}</text>
+        </view>
+        
+        <!-- 状态标签 -->
+        <view class="post-status {{item.status}}">
+          {{item.status === 'pending' ? '待认领' : 
+            item.status === 'claimed' ? '已认领' : '已归还'}}
+        </view>
+      </view>
+    </view>
+  </block>
+  
+  <!-- 加载提示 -->
+  <view class="loading" wx:if="{{isLoading}}">加载中...</view>
+  <view class="no-more" wx:if="{{!hasMore && postList.length > 0}}">没有更多了</view>
+  <view class="empty" wx:if="{{postList.length === 0}}">
+    <text>暂无相关内容</text>
+  </view>
+</scroll-view>

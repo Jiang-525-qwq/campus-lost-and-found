@@ -27,8 +27,8 @@
   padding: 0 40rpx;
   margin-left: 20rpx;
   font-size: 28rpx;
-  height: auto;
-  line-height: normal;
+  height:auto;
+  line-height:100rpx;
 }
 
 .filter-tabs {

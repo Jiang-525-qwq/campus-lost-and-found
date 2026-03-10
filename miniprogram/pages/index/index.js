@@ -23,7 +23,7 @@ Page({
         title: '寻找丢失的校园卡',
         description: '姓名：张三，学号：20231001，3月5日在图书馆丢失',
         location: '图书馆',
-        images: ['https://example.com/card.jpg'],
+        images: [],
         status: 'pending',
         createTime: '2026-03-05 14:30:00',
         lostTime: '2026-03-05 13:00:00'
@@ -34,7 +34,7 @@ Page({
         title: '捡到一个黑色钱包',
         description: '内有身份证、银行卡若干，失主请速联系',
         location: '二食堂',
-        images: ['https://example.com/wallet.jpg'],
+        images: [],
         status: 'pending',
         createTime: '2026-03-04 10:20:00',
         foundTime: '2026-03-04 09:30:00'
